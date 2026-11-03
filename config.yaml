@@ -1,0 +1,55 @@
+# config.yaml - Patient Adherence Reconciliation Configuration
+
+seed: 42
+drug_name: "DrugX"
+pdc_threshold: 0.80
+
+reporting_periods:
+  this_quarter:
+    name: "This Quarter"
+    period_label: "Q2 2024"
+    target_pipeline_pdc: 0.58
+    target_crm_refill: 0.71
+  last_quarter:
+    name: "Last Quarter"
+    period_label: "Q1 2024"
+    target_pipeline_pdc: 0.64
+    target_crm_refill: 0.72
+
+cohort:
+  total_patients: 250
+  q1_patients: 125
+  q2_patients: 125
+
+crm_extraction:
+  required_fields:
+    - missed_doses
+    - refill_delays
+    - discontinuation_reasons
+    - medication_interruptions
+    - patient_reported_behavior
+    - evidence_text
+    - confidence
+    - human_review_flag
+  discontinuation_categories:
+    - "adverse_events"
+    - "cost_copay_barrier"
+    - "perceived_inefficacy"
+    - "physician_directed"
+    - "loss_of_coverage"
+    - "none"
+  behavior_categories:
+    - "adherent"
+    - "erratic"
+    - "delayed_refill"
+    - "discontinued"
+
+gemini:
+  cache_file: "data/gemini_cache.json"
+
+evaluation:
+  labelled_file: "data/labelled_crm.json"
+
+dq:
+  max_stale_days: 45
+  max_gap_days: 90
